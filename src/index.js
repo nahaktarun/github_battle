@@ -10,7 +10,8 @@ root.render(
     {/* <App /> */}
     <div className="light">
       <div className="container">
-        <Battle />
+        {/* <Battle /> */}
+        <App />
       </div>
     </div>
   </StrictMode>

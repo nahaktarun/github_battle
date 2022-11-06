@@ -1,24 +1,43 @@
-import { StrictMode } from "react";
-import { createRoot } from "react-dom/client";
-import App from "./App";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Battle from "../src/components/Battle";
-const rootElement = document.getElementById("root");
-const root = createRoot(rootElement);
+import * as React from "react";
+import * as ReactDOM from "react-dom/client";
 import "./styles.css";
-root.render(
-  <Router>
-    <StrictMode>
-      {/* <App /> */}
-      <div className="light">
-        <div className="container">
-          {/* <Battle /> */}
-          <Routes>
-            <Route path="/" element={<App />} />
-            <Route path="/battle" element={<Battle />} />
-          </Routes>
+import Popular from "./components/Popular";
+import Battle from "./components/Battle";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Navbar from "./components/Navbar";
+
+class App extends React.Component {
+  constructor(prop) {
+    super(prop);
+
+    this.state = {
+      theme: "light",
+    };
+
+    this.toggleTheme = this.toggleTheme.bind(this);
+  }
+  toggleTheme() {
+    this.setState(({ theme }) => ({
+      theme: theme === "light" ? "dark" : "light",
+    }));
+  }
+  render() {
+    return (
+      <Router>
+        <div className={this.state.theme}>
+          <div className="container">
+            <Navbar theme={this.state.theme} toggleTheme={this.toggleTheme} />
+            <Routes>
+              <Route path="/" element={<Popular />} />
+              <Route path="/battle" element={<Battle />} />
+            </Routes>
+          </div>
         </div>
-      </div>
-    </StrictMode>
-  </Router>
-);
+      </Router>
+    );
+  }
+}
+
+const rootElement = document.getElementById("root");
+const root = ReactDOM.createRoot(rootElement);
+root.render(<App />);
